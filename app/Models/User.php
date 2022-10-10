@@ -8,10 +8,13 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Osiset\ShopifyApp\Contracts\ShopModel as IShopModel;
+use Osiset\ShopifyApp\Traits\ShopModel;
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements IShopModel
 {
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
+    use ShopModel;
 
     /**
      * The attributes that are mass assignable.
