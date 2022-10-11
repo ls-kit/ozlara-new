@@ -19,9 +19,9 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // AUTH ROUTES
 Route::post('register/submit', [UsersController::class, 'store'])->name('register.agent');
@@ -38,3 +38,13 @@ Route::group(['middleware' => ['verified', 'auth']],  function() {
         Route::resource('users', UsersController::class, ['name' => 'users']);
     });
 });
+
+
+Route::get('/', function () {
+    return view('welcome');
+})->middleware(['verify.shopify'])->name('home');
+
+
+Route::get('/shopify-login',function(){
+    return view('shopify.login');
+})->name('shopify.login');
