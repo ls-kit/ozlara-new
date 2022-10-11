@@ -45,6 +45,12 @@ Route::get('/', function () {
 })->middleware(['verify.shopify'])->name('home');
 
 
+Route::get('/products', function () {
+    $products = Auth::user()->api()->rest('GET', '/admin/api/2022-10/products.json')['body'];
+    return view('shopify.products', compact('products'));
+})->middleware(['verify.shopify'])->name('products');
+
+
 Route::get('/shopify-login',function(){
     return view('shopify.login');
 })->name('shopify.login');

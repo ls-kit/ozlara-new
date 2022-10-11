@@ -1,14 +1,11 @@
-@extends('shopify-app::layouts.default')
-
+@extends('backend.layout.app')
+@section('title','Role Management')
 @section('content')
-    <!-- You are: (shop domain name) -->
-    <p>You are: {{ $shopDomain ?? Auth::user()->name }}</p>
+<p>You are: {{ $shopDomain ?? Auth::user()->name }}</p>
 @endsection
 
-@section('scripts')
-    @parent
-
+@push('custom_script')
     <script>
         actions.TitleBar.create(app, { title: 'Welcome' });
     </script>
-@endsection
+@endpush

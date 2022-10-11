@@ -34,6 +34,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{Auth::user()->name}}products"
+                        class="nav-link {{ Request::is('products') ? 'active' : null }}">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            Products
+                        </p>
+                    </a>
+                </li>
                 @role('admin')
                     <li class="nav-item">
                         <a href="{{ route('roles.index') }}"
