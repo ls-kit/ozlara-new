@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class SettingController extends Controller
 {
-    // new added function
-    public function configureTheme(){
+    public function create()
+    {
         $themes = Auth::user()->api()->rest('GET', '/admin/api/2022-04/themes.json');    
         $shopThemes = $themes['body']['themes'];
         $searchedThemeRole = "main";
@@ -23,7 +22,7 @@ class SettingController extends Controller
             }
         );
         $activeThemeId = $activeTheme[0]['id'];
-        $snippet = "Hello this is new file Ls";
+        $snippet = Storage::disk('local')->get('Laravel 8.php');
         //Snippet to pass to rest api request
         $data = array(
             'asset'=> [
@@ -40,12 +39,26 @@ class SettingController extends Controller
         ]) ?  ['message' => 'Theme setup successfully'] : ['message' => 'Theme setup error!'];
     }
 
-    public function index()
+    public function destroy()
     {
-        //
+        $activeTheme = Setting::where('shop_id', Auth::user()->name)->first();
+        $activeThemeId = $activeTheme->shop_active_theme_id;
+
+        $data = array(
+            'asset'=> [
+                'key' => 'snippets/ls_newcode.liquid'
+            ]
+        );
+
+        Auth::user()->api()->rest('DELETE', '/admin/api/2022-10/themes/' . $activeThemeId . '/assets.json', $data);
+        if($activeTheme->delete()) {
+            return redirect()->back()->with('success', 'File deleted successfully!');
+        }
+
+        return redirect()->back()->with('error', 'File was not deleted!');
     }
 
-    public function create()
+    public function index()
     {
         //
     }
@@ -66,11 +79,6 @@ class SettingController extends Controller
     }
 
     public function update(Request $request, Setting $setting)
-    {
-        //
-    }
-
-    public function destroy(Setting $setting)
     {
         //
     }

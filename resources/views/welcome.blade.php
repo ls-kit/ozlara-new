@@ -8,8 +8,12 @@
     <p>You are: {{ $shopDomain ?? Auth::user()->name }}</p>
 
     @if($setting == null)
-        <button onclick="setupTheme()">Make File</button>
+        <button onclick="themeCreate()">Make File</button>
+    @else
+        <button onclick="themeDelete()">Delete File</button>
     @endif
+
+
 @endsection
 
 @section('scripts')
@@ -20,8 +24,18 @@
             title: 'Welcome'
         });
 
-        function setupTheme() {
-            axios.post('configure-theme')
+        function themeCreate() {
+            axios.post('/theme/create')
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function themeDelete() {
+            axios.get('/theme/delete')
                 .then(function(response) {
                     console.log(response);
                 })

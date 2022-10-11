@@ -21,10 +21,6 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['verify' => true]);
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 // AUTH ROUTES
 Route::post('register/submit', [UsersController::class, 'store'])->name('register.agent');
 Route::post('/login', [UsersController::class, 'login'])->name('login.agent');
@@ -47,13 +43,10 @@ Route::get('/shopify-login',function(){
 })->name('shopify.login');
 
 Route::group(['middleware' => ['verify.shopify']],  function() {
-    // Route::get('/', function () {
-    //     return view('welcome');
-    // })->name('home');
     Route::get('/', [WelcomeController::class, 'welcome'])->name('home');
 
-
-    Route::post('configure-theme', [SettingController::class, 'configureTheme']);
-    Route::resource('settings', SettingController::class);
+    // THEME ROUTES
+    Route::post('/theme/create', [SettingController::class, 'create']);
+    Route::any('/theme/delete', [SettingController::class, 'destroy']);
 });
 
