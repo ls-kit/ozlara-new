@@ -7,12 +7,19 @@
     <!-- You are: (shop domain name) -->
     <p>You are: {{ $shopDomain ?? Auth::user()->name }}</p>
 
-    @if($setting == null)
-        <button onclick="themeCreate()">Make File</button>
-    @else
-        <button onclick="themeDelete()">Delete File</button>
-    @endif
+    <div>
+        @if($setting == null)
+            <button onclick="themeCreate()">Create Theme File</button>
+        @else
+            <button onclick="themeDelete()">Delete Theme File</button>
+        @endif
+    </div><br>
 
+    <div>
+        <button onclick="scriptCreate()">Create Script File</button>
+        <button onclick="scriptUpdate()">Update Script File</button>
+        <button onclick="scriptDelete()">Delete Script File</button>
+    </div>
 
 @endsection
 
@@ -24,8 +31,10 @@
             title: 'Welcome'
         });
 
+        // THEME FUNCTIONS
         function themeCreate() {
-            axios.post('/theme/create')
+            axios
+                .post('themes/create')
                 .then(function(response) {
                     console.log(response);
                 })
@@ -35,7 +44,40 @@
         }
 
         function themeDelete() {
-            axios.get('/theme/delete')
+            axios
+                .get('themes/destroy')
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        // SCRIPT FUNCTIONS
+        function scriptCreate() {
+            axios
+                .post('scripts/create')
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function scriptUpdate() {
+            axios.post('scripts/update')
+                .then(function(response) {
+                    console.log(response);
+                })
+                .catch(function(error) {
+                    console.log(error);
+                });
+        }
+
+        function scriptDelete() {
+            axios.get('scripts/destroy')
                 .then(function(response) {
                     console.log(response);
                 })

@@ -57,29 +57,4 @@ class SettingController extends Controller
 
         return redirect()->back()->with('error', 'File was not deleted!');
     }
-
-    public function index()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show(Setting $setting)
-    {
-        //
-    }
-
-    public function edit(Setting $setting)
-    {
-        //
-    }
-
-    public function update(Request $request, Setting $setting)
-    {
-        //
-    }
 }
